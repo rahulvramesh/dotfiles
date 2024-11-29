@@ -1,6 +1,8 @@
 #!/bin/bash
 # install.sh - Dotfiles installation script
 
+set -e  # Exit on error
+
 # Create necessary directories
 mkdir -p ~/.config
 mkdir -p ~/.local/bin
@@ -38,9 +40,9 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 # Change default shell to zsh if not already
-if [ "$SHELL" != "/usr/bin/zsh" ]; then
-    chsh -s $(which zsh)
-fi
+# if [ "$SHELL" != "/usr/bin/zsh" ]; then
+#     chsh -s $(which zsh)
+# fi
 
 # Node Version Manager installation and setup
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -55,6 +57,6 @@ nvm install --lts
 nvm use --lts
 
 # Source the new configurations
-source ~/.zshrc
+# source ~/.zshrc
 
 echo "Dotfiles installation complete!"
