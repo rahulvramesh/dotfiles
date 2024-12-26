@@ -2,6 +2,14 @@
 
 Personal dotfiles for development environments and devcontainers.
 
+## Tools
+[] AstroVIM
+[] Nix & Felx
+[] Docker (Conditional)
+[] Webinstaller (https://webinstall.dev/)
+[] DevContainer
+
+
 ## Installation
 
 ```bash
