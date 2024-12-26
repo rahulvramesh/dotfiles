@@ -23,6 +23,9 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
+## Plan
+-> Branches for vps & devcontainer
+
 ## Features
 
 - Zsh configuration with Oh My Zsh
