@@ -3,12 +3,17 @@
 Personal dotfiles for development environments and devcontainers.
 
 ## Tools
-[] AstroVIM
-[] Nix & Felx
-[] Docker (Conditional)
-[] Webinstaller (https://webinstall.dev/)
-[] DevContainer
+[] AstroVIM 
 
+[] Nix & Felx 
+
+[] Docker (Conditional) 
+
+[] Webinstaller (https://webinstall.dev/) 
+
+[] DevContainer 
+
+[] Zsh & Omyzh
 
 ## Installation
 
