@@ -11,6 +11,8 @@ Personal dotfiles for development environments and devcontainers.
 
 [] Webinstaller (https://webinstall.dev/) 
 
+[] pipx
+
 [] DevContainer 
 
 [] Zsh & Omyzh
