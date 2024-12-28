@@ -55,4 +55,24 @@ if ! update_system; then
     exit 1
 fi
 
+# Copy The Files
+# TODO:
+
+# Install Basic Packages Using web installer
+sudo apt install -y curl git zsh 
+
+curl -sS https://webi.sh/webi | sh
+
+if [ -f ~/.config/envman/PATH.env ]; then
+        . ~/.config/envman/PATH.env
+    else
+        echo "Warning: PATH.env not found. You may need to restart your shell."
+fi
+
+# Install the packages
+webi bat fd jq delta gh k9s
+
+# Install Zinit
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+
 echo "Proceeding with further installations..."
