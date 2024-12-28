@@ -59,7 +59,7 @@ fi
 # TODO:
 
 # Install Basic Packages Using web installer
-sudo apt install -y curl git zsh make unzip ripgrep cargo
+sudo apt install -y curl git zsh make unzip ripgrep cargo tmux 
 
 curl -sS https://webi.sh/webi | sh
 
