@@ -59,7 +59,7 @@ fi
 # TODO:
 
 # Install Basic Packages Using web installer
-sudo apt install -y curl git zsh make unzip ripgrep cargo tmux 
+sudo apt install -y curl git zsh make unzip ripgrep cargo tmux pipx 
 
 curl -sS https://webi.sh/webi | sh
 
@@ -68,6 +68,9 @@ if [ -f ~/.config/envman/PATH.env ]; then
     else
         echo "Warning: PATH.env not found. You may need to restart your shell."
 fi
+
+# Ensure Path
+pipx ensurepath
 
 # Install the packages
 webi bat fd jq delta gh k9s node pyenv
