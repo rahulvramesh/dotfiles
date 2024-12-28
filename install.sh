@@ -59,7 +59,7 @@ fi
 # TODO:
 
 # Install Basic Packages Using web installer
-sudo apt install -y curl git zsh 
+sudo apt install -y curl git zsh make unzip ripgrep cargo
 
 curl -sS https://webi.sh/webi | sh
 
@@ -70,7 +70,7 @@ if [ -f ~/.config/envman/PATH.env ]; then
 fi
 
 # Install the packages
-webi bat fd jq delta gh k9s
+webi bat fd jq delta gh k9s node pyenv
 
 # Install Zinit
 bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
