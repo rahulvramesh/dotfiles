@@ -1,62 +1,58 @@
 #!/bin/bash
-# install.sh - Dotfiles installation script
 
-set -e  # Exit on error
+# Function to check if running in Docker
+is_docker() {
+    if [ -f /.dockerenv ] || grep -q 'docker\|lxc' /proc/1/cgroup; then
+        echo "Docker environment detected"
+        return 0
+    fi
+    return 1
+}
 
-# Create necessary directories
-mkdir -p ~/.config
-mkdir -p ~/.local/bin
+# Function to detect OS and update system
+update_system() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$NAME
+        VERSION=$VERSION_ID
+        
+        case $OS in
+            "Ubuntu"|"Debian GNU/Linux")
+                echo "Detected: $OS $VERSION"
+                
+                # Check if running in Docker
+                if is_docker; then
+                    echo "Skipping system update in Docker environment"
+                    return 0
+                fi
+                
+                echo "Updating system packages..."
+                sudo apt update && sudo apt upgrade -y
+                
+                # Check if update was successful
+                if [ $? -eq 0 ]; then
+                    echo "System update completed successfully"
+                    return 0
+                else
+                    echo "Error: System update failed"
+                    return 1
+                fi
+                ;;
+            *)
+                echo "This is not Ubuntu or Debian. Detected: $OS"
+                return 1
+                ;;
+        esac
+    else
+        echo "Cannot detect OS: /etc/os-release file not found"
+        return 1
+    fi
+}
 
-# Symlink configuration files
-ln -sf $(pwd)/zsh/.zshrc ~/.zshrc
-ln -sf $(pwd)/git/.gitconfig ~/.gitconfig
-ln -sf $(pwd)/vim/.vimrc ~/.vimrc
-ln -sf $(pwd)/tmux/.tmux.conf ~/.tmux.conf
-ln -sf $(pwd)/devcontainer/global-devcontainer.json ~/.devcontainer.json
-
-# Install basic dependencies (customize based on your needs)
-if command -v apt-get &> /dev/null; then
-    sudo apt-get update
-    sudo apt-get install -y \
-        zsh \
-        vim \
-        tmux \
-        git \
-        curl \
-        wget
-elif command -v brew &> /dev/null; then
-    brew install \
-        zsh \
-        vim \
-        tmux \
-        git \
-        curl \
-        wget
+# Run the update
+if ! update_system; then
+    echo "System update failed. Exiting..."
+    exit 1
 fi
 
-# Install Oh My Zsh if not already installed
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo "y" | sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-# Change default shell to zsh if not already
-# if [ "$SHELL" != "/usr/bin/zsh" ]; then
-#     chsh -s $(which zsh)
-# fi
-
-# Node Version Manager installation and setup
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-
-# Add to ~/.zshrc
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Install latest LTS version of Node.js
-nvm install --lts
-nvm use --lts
-
-# Source the new configurations
-# source ~/.zshrc
-
-echo "Dotfiles installation complete!"
+echo "Proceeding with further installations..."
